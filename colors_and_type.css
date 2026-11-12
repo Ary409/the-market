@@ -1,0 +1,119 @@
+/* The Market — Design tokens
+ *
+ * Tres temas. Todo el sistema usa estas variables, así que cambiar el atributo
+ * data-tema en <html> repinta la aplicación entera sin tocar una sola pantalla.
+ *
+ *   (sin atributo)      Claro    — el de siempre
+ *   data-tema="oscuro"  Oscuro   — para trabajar de noche
+ *   data-tema="pink"    Pink     — paleta del cliente
+ */
+
+:root {
+  /* Superficies */
+  --paper:          #ffffff;
+  --ink-100:        #0a0a0a;
+  --ink-80:         #262626;
+  --ink-20:         #d4d4d4;
+  --ink-10:         #e5e5e5;
+  --ink-05:         #f5f5f5;
+
+  /* Bordes */
+  --border:         #e5e5e5;
+  --border-strong:  #d4d4d4;
+
+  /* Texto */
+  --fg:             #171717;
+  --fg-muted:       #737373;
+  --fg-subtle:      #a3a3a3;
+
+  /* Semánticos */
+  --danger:         #dc2626;
+  --danger-bg:      #fef2f2;
+  --danger-bd:      #fca5a5;
+  --success:        #16a34a;
+  --success-bg:     #ecfdf3;
+  --warning:        #b45309;
+  --warning-bg:     #fef3c7;
+
+  /* Foco y sombras */
+  --focus-ring:     rgba(10, 10, 10, 0.12);
+  --shadow-xl:      0 20px 25px -5px rgba(0,0,0,0.08), 0 8px 10px -6px rgba(0,0,0,0.06);
+
+  /* Tipografía */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Cascadia Code", "SF Mono", "Fira Code", "Consolas", monospace;
+}
+
+/* ── Oscuro ─────────────────────────────────────────────────────────────────
+ * No es el claro invertido: los grises se eligieron para que el texto descanse
+ * y los montos resalten en jornadas largas frente a la pantalla.
+ */
+html[data-tema="oscuro"] {
+  --paper:          #1a1d21;   /* tarjetas y barras */
+  --ink-100:        #f2f4f6;   /* lo que antes era "tinta" ahora es lo claro */
+  --ink-80:         #d7dbe0;
+  --ink-20:         #3a4048;
+  --ink-10:         #2a2f35;
+  --ink-05:         #14171a;   /* fondo general */
+
+  --border:         #2e343b;
+  --border-strong:  #3d444d;
+
+  --fg:             #e8ebee;
+  --fg-muted:       #98a2ad;
+  --fg-subtle:      #6b7681;
+
+  --danger:         #f87171;
+  --danger-bg:      #2a1618;
+  --danger-bd:      #5d2427;
+  --success:        #4ade80;
+  --success-bg:     #14251b;
+  --warning:        #fbbf24;
+  --warning-bg:     #2a2113;
+
+  --focus-ring:     rgba(242, 244, 246, 0.18);
+  --shadow-xl:      0 20px 25px -5px rgba(0,0,0,0.45), 0 8px 10px -6px rgba(0,0,0,0.35);
+
+  color-scheme: dark;
+}
+
+/* ── Pink ───────────────────────────────────────────────────────────────────
+ * Paleta del cliente:
+ *   Blush F0C4CB · Antique Rose C87D87 · Champagne FBEAD6
+ *   Dried Thyme 6B7556 · Bisque E5BCA9
+ * Antique Rose actúa como color principal; Dried Thyme da el contrapunto
+ * verde para lo positivo (dinero que entra, stock en orden).
+ */
+html[data-tema="pink"] {
+  --paper:          #fffaf7;   /* papel cálido, no blanco puro */
+  --ink-100:        #C87D87;   /* Antique Rose — botones y acentos */
+  --ink-80:         #a86670;
+  --ink-20:         #F0C4CB;   /* Blush */
+  --ink-10:         #f6dde1;
+  --ink-05:         #FBEAD6;   /* Champagne — fondo general */
+
+  --border:         #f0d9d3;
+  --border-strong:  #E5BCA9;   /* Bisque */
+
+  --fg:             #4a3a3d;   /* marrón suave: se lee mejor que negro puro */
+  --fg-muted:       #8d757a;
+  --fg-subtle:      #b09a9e;
+
+  --danger:         #c0392b;
+  --danger-bg:      #fdeceb;
+  --danger-bd:      #f0b8b2;
+  --success:        #6B7556;   /* Dried Thyme */
+  --success-bg:     #eef0e8;
+  --warning:        #b06a3f;
+  --warning-bg:     #fbeade;
+
+  --focus-ring:     rgba(200, 125, 135, 0.28);
+  --shadow-xl:      0 20px 25px -5px rgba(200,125,135,0.14), 0 8px 10px -6px rgba(200,125,135,0.10);
+
+  color-scheme: light;
+}
+
+/* El cambio de tema se acompaña para que no se sienta un salto brusco */
+body, .tema-transicion, .tema-transicion * {
+  transition: background-color 220ms ease, border-color 220ms ease, color 220ms ease;
+}

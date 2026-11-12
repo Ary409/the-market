@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Market — Manual de Usuario</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #F7F7F7; color: #0a0a0a; line-height: 1.6; }
+  .page { max-width: 860px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  /* Header */
+  .header { background: #0a0a0a; color: #fff; padding: 32px 40px; border-radius: 12px; margin-bottom: 40px; display: flex; align-items: center; gap: 20px; }
+  .logo { width: 48px; height: 48px; background: #fff; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .logo svg { display: block; }
+  .header-text h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; }
+  .header-text p { font-size: 14px; color: rgba(255,255,255,0.6); margin-top: 4px; }
+
+  /* TOC */
+  .toc { background: #fff; border: 1px solid #E5E5E5; border-radius: 10px; padding: 24px; margin-bottom: 40px; }
+  .toc h2 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: #737373; margin-bottom: 14px; }
+  .toc ol { padding-left: 20px; display: flex; flex-direction: column; gap: 6px; }
+  .toc a { color: #0a0a0a; text-decoration: none; font-size: 14px; font-weight: 500; }
+  .toc a:hover { text-decoration: underline; }
+
+  /* Sections */
+  .section { background: #fff; border: 1px solid #E5E5E5; border-radius: 10px; padding: 28px 32px; margin-bottom: 20px; }
+  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid #F0F0F0; }
+  .section-num { width: 32px; height: 32px; background: #0a0a0a; color: #fff; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; flex-shrink: 0; }
+  .section h2 { font-size: 18px; font-weight: 700; letter-spacing: -0.3px; }
+
+  h3 { font-size: 14px; font-weight: 600; color: #0a0a0a; margin: 20px 0 10px; }
+  p { font-size: 14px; color: #404040; margin-bottom: 10px; }
+  ul, ol { padding-left: 20px; margin-bottom: 12px; }
+  li { font-size: 14px; color: #404040; margin-bottom: 5px; line-height: 1.5; }
+
+  /* Steps */
+  .steps { display: flex; flex-direction: column; gap: 10px; margin: 14px 0; }
+  .step { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; background: #F7F7F7; border-radius: 8px; }
+  .step-n { width: 24px; height: 24px; background: #0a0a0a; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .step-text { font-size: 14px; color: #0a0a0a; }
+  .step-text strong { font-weight: 600; }
+
+  /* Tip / Warning */
+  .tip { display: flex; gap: 10px; padding: 12px 14px; background: #ECFDF3; border: 1px solid #BBF7D0; border-radius: 8px; margin: 14px 0; font-size: 13px; color: #15803D; }
+  .warn { display: flex; gap: 10px; padding: 12px 14px; background: #FEF3C7; border: 1px solid #FDE68A; border-radius: 8px; margin: 14px 0; font-size: 13px; color: #92400E; }
+  .tip-icon, .warn-icon { font-size: 16px; flex-shrink: 0; }
+
+  /* Table */
+  table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 13px; }
+  th { background: #F7F7F7; padding: 9px 12px; text-align: left; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: #737373; border-bottom: 1px solid #E5E5E5; }
+  td { padding: 10px 12px; border-bottom: 1px solid #F0F0F0; color: #404040; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+
+  /* Roles */
+  .role-badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+  .admin { background: #EFF6FF; color: #1E40AF; border: 1px solid #BFDBFE; }
+  .vendedor { background: #F0FDF4; color: #15803D; border: 1px solid #BBF7D0; }
+
+  /* Kbd */
+  kbd { background: #F7F7F7; border: 1px solid #E5E5E5; border-radius: 4px; padding: 1px 6px; font-size: 12px; font-family: monospace; }
+
+  footer { text-align: center; font-size: 12px; color: #A3A3A3; margin-top: 40px; padding-top: 20px; border-top: 1px solid #E5E5E5; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="logo">
+      <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#0a0a0a" stroke-width="2.5" stroke-linecap="square">
+        <path d="M5 19V7L12 14L19 7V19"/>
+      </svg>
+    </div>
+    <div class="header-text">
+      <h1>The Market — Manual de Usuario</h1>
+      <p>Guía rápida para el dueño del negocio y los vendedores</p>
+    </div>
+  </div>
+
+  <div class="toc">
+    <h2>Contenido</h2>
+    <ol>
+      <li><a href="#inicio">Cómo iniciar el sistema</a></li>
+      <li><a href="#roles">Usuarios y roles</a></li>
+      <li><a href="#productos">Gestión de productos e inventario</a></li>
+      <li><a href="#ventas">Registrar una venta (escritorio)</a></li>
+      <li><a href="#movil">Usar la app móvil (vendedor)</a></li>
+      <li><a href="#caja">Apertura y cierre de caja</a></li>
+      <li><a href="#alertas">Alertas de stock</a></li>
+      <li><a href="#reportes">Reportes y exportar datos</a></li>
+      <li><a href="#backup">Copias de seguridad</a></li>
+      <li><a href="#problemas">Solución de problemas comunes</a></li>
+    </ol>
+  </div>
+
+  <!-- 1. Inicio -->
+  <div class="section" id="inicio">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <h2>Cómo iniciar el sistema</h2>
+    </div>
+    <p>El sistema tiene dos partes: el <strong>servidor</strong> (que corre en segundo plano) y la <strong>aplicación</strong> (la pantalla que ves). Después de la instalación, el servidor arranca automáticamente con Windows.</p>
+    <div class="steps">
+      <div class="step"><div class="step-n">1</div><div class="step-text">Enciende la computadora y espera que cargue Windows.</div></div>
+      <div class="step"><div class="step-n">2</div><div class="step-text">El servidor se inicia solo (no verás ninguna ventana).</div></div>
+      <div class="step"><div class="step-n">3</div><div class="step-text">Haz doble clic en el acceso directo <strong>The Market</strong> en el escritorio.</div></div>
+      <div class="step"><div class="step-n">4</div><div class="step-text">Ingresa tu correo y contraseña en la pantalla de login.</div></div>
+    </div>
+    <div class="tip"><span class="tip-icon">✓</span> Usuario admin inicial: <strong>admin@themarket.com</strong> — Contraseña: <strong>admin1234</strong>. Cámbiala en el módulo de Usuarios al primer uso.</div>
+  </div>
+
+  <!-- 2. Roles -->
+  <div class="section" id="roles">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <h2>Usuarios y roles</h2>
+    </div>
+    <table>
+      <thead><tr><th>Rol</th><th>Qué puede hacer</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="role-badge admin">Admin</span></td>
+          <td>Acceso total: productos, inventario, compras, proveedores, ventas, reportes, usuarios, caja.</td>
+        </tr>
+        <tr>
+          <td><span class="role-badge vendedor">Vendedor</span></td>
+          <td>Solo puede registrar ventas (POS) y ver su historial de ventas del día.</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3>Crear un vendedor nuevo</h3>
+    <div class="steps">
+      <div class="step"><div class="step-n">1</div><div class="step-text">Ve al módulo <strong>Usuarios</strong> en el menú lateral.</div></div>
+      <div class="step"><div class="step-n">2</div><div class="step-text">Haz clic en <strong>Agregar usuario</strong>.</div></div>
+      <div class="step"><div class="step-n">3</div><div class="step-text">Llena nombre, correo, contraseña y selecciona rol <strong>Vendedor</strong>.</div></div>
+      <div class="step"><div class="step-n">4</div><div class="step-text">El vendedor puede entrar desde la app de escritorio o la app móvil.</div></div>
+    </div>
+  </div>
+
+  <!-- 3. Productos -->
+  <div class="section" id="productos">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <h2>Gestión de productos e inventario</h2>
+    </div>
+    <h3>Agregar un producto</h3>
+    <div class="steps">
+      <div class="step"><div class="step-n">1</div><div class="step-text">Ve a <strong>Inventario</strong> → clic en <strong>Agregar producto</strong>.</div></div>
+      <div class="step"><div class="step-n">2</div><div class="step-text">Llena el nombre, código de barras (opcional, puedes escanearlo), categoría, precio de compra y precio de venta.</div></div>
+      <div class="step"><div class="step-n">3</div><div class="step-text">Ingresa el stock inicial y el stock mínimo (cuando el stock baje de este número se generará una alerta).</div></div>
+      <div class="step"><div class="step-n">4</div><div class="step-text">Si el producto tiene fecha de vencimiento, activa la casilla y selecciónala.</div></div>
+      <div class="step"><div class="step-n">5</div><div class="step-text">Clic en <strong>Agregar producto</strong> para guardar.</div></div>
+    </div>
+    <h3>Registrar entrada de mercadería</h3>
+    <p>Cuando llegue mercadería sin orden de compra previa:</p>
+    <div class="steps">
+      <div class="step"><div class="step-n">1</div><div class="step-text">Ve a <strong>Inventario</strong> y busca el producto.</div></div>
+      <div class="step"><div class="step-n">2</div><div class="step-text">Usa el módulo <strong>Compras</strong> para registrar la orden de compra al proveedor.</div></div>
+      <div class="step"><div class="step-n">3</div><div class="step-text">Al recibir la mercadería, haz clic en <strong>Marcar recibida</strong> — el stock se actualiza automáticamente.</div></div>
+    </div>
+    <div class="warn"><span class="warn-icon">⚠</span> El stock se descuenta automáticamente con cada venta. No lo modifiques manualmente a menos que haya un error.</div>
+  </div>
+
+  <!-- 4. Ventas escritorio -->
+  <div class="section" id="ventas">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <h2>Registrar una venta (escritorio)</h2>
+    </div>
+    <div class="warn"><span class="warn-icon">⚠</span> La caja debe estar <strong>abierta</strong> para poder registrar ventas. Ve primero al módulo Caja.</div>
+    <p>El módulo de ventas del escritorio está pensado para el rol <strong>Vendedor</strong>. Al iniciar sesión con ese rol, verás directamente la pantalla POS.</p>
+    <div class="steps">
+      <div class="step"><div class="step-n">1</div><div class="step-text">Escribe el nombre del producto en la barra de búsqueda o escanea el código de barras.</div></div>
+      <div class="step"><div class="step-n">2</div><div class="step-text">Haz clic en el producto para agregarlo al carrito.</div></div>
+      <div class="step"><div class="step-n">3</div><div class="step-text">Ajusta la cantidad con los botones <strong>−</strong> y <strong>+</strong> si el cliente lleva más de uno.</div></div>
+      <div class="step"><div class="step-n">4</div><div class="step-text">Selecciona el método de pago: <strong>Efectivo</strong> o <strong>Tarjeta</strong>.</div></div>
+      <div class="step"><div class="step-n">5</div><div class="step-text">Si es efectivo, ingresa el monto recibido. El sistema calcula el cambio automáticamente.</div></div>
+      <div class="step"><div class="step-n">6</div><div class="step-text">Haz clic en <strong>Cobrar</strong>. Se muestra el recibo y el stock se actualiza solo.</div></div>
+    </div>
+  </div>
+
+  <!-- 5. App móvil -->
+  <div class="section" id="movil">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <h2>Usar la app móvil (vendedor)</h2>
+    </div>
+    <h3>Configurar el celular por primera vez</h3>
+    <div class="steps">
+      <div class="step"><div class="step-n">1</div><div class="step-text">Conecta el celular a la misma red WiFi que la computadora del negocio.</div></div>
+      <div class="step"><div class="step-n">2</div><div class="step-text">Abre la app. En la pantalla de login, toca el ícono de configuración (⚙) para ingresar la dirección IP del servidor.</div></div>
+      <div class="step"><div class="step-n">3</div><div class="step-text">Ingresa la IP de la computadora seguida de <kbd>:8000</kbd>. Ejemplo: <kbd>192.168.0.3:8000</kbd></div></div>
+      <div class="step"><div class="step-n">4</div><div class="step-text">Inicia sesión con el correo y contraseña del vendedor.</div></div>
+    </div>
+    <div class="tip"><span class="tip-icon">✓</span> Para ver la IP de la computadora: abre el menú Inicio → escribe <kbd>cmd</kbd> → ejecuta <kbd>ipconfig</kbd> y busca "Dirección IPv4".</div>
+    <h3>Escanear códigos de barras</h3>
+    <p>En la pantalla POS y en Consulta rápida verás un botón de cámara. Al tocarlo se abre el escáner. Apunta al código del producto y se agregará automáticamente al carrito.</p>
+  </div>
+
+  <!-- 6. Caja -->
+  <div class="section" id="caja">
+    <div class="section-header">
+      <div class="section-num">6</div>
+      <h2>Apertura y cierre de caja</h2>
+    </div>
+    <h3>Abrir caja al inicio del día</h3>
+    <div class="steps">
+      <div class="step"><div class="step-n">1</div><div class="step-text">Ve al módulo <strong>Caja</strong>.</div></div>
+      <div class="step"><div class="step-n">2</div><div class="step-text">Haz clic en <strong>Abrir caja</strong>.</div></div>
+      <div class="step"><div class="step-n">3</div><div class="step-text">Ingresa el monto en efectivo con el que inicias (fondo de cambio). Ejemplo: $500.</div></div>
+      <div class="step"><div class="step-n">4</div><div class="step-text">Confirma. Ya puedes registrar ventas.</div></div>
+    </div>
+    <h3>Cerrar caja al final del día</h3>
+    <div class="steps">
+      <div class="step"><div class="step-n">1</div><div class="step-text">Cuenta el efectivo físico que hay en la caja.</div></div>
+      <div class="step"><div class="step-n">2</div><div class="step-text">Ve al módulo <strong>Caja</strong> → <strong>Cerrar caja</strong>.</div></div>
+      <div class="step"><div class="step-n">3</div><div class="step-text">Ingresa el monto contado. El sistema calculará la diferencia vs lo esperado.</div></div>
+      <div class="step"><div class="step-n">4</div><div class="step-text">El resumen muestra: ventas en efectivo, ventas con tarjeta y si hay diferencia.</div></div>
+    </div>
+    <div class="tip"><span class="tip-icon">✓</span> Solo puede haber una caja abierta a la vez. Si la computadora se apaga con la caja abierta, simplemente ciérrala al volver a encender.</div>
+  </div>
+
+  <!-- 7. Alertas -->
+  <div class="section" id="alertas">
+    <div class="section-header">
+      <div class="section-num">7</div>
+      <h2>Alertas de stock</h2>
+    </div>
+    <p>El sistema genera alertas automáticamente en dos casos:</p>
+    <table>
+      <thead><tr><th>Tipo de alerta</th><th>Cuándo aparece</th><th>Dónde verla</th></tr></thead>
+      <tbody>
+        <tr><td>Stock bajo</td><td>Cuando el stock de un producto llega al stock mínimo definido</td><td>Dashboard, módulo Inventario, app móvil</td></tr>
+        <tr><td>Por vencer</td><td>Cuando un producto vence en los próximos 7 días</td><td>Dashboard, app móvil (pestaña Alertas)</td></tr>
+      </tbody>
+    </table>
+    <p>Para cambiar el stock mínimo de un producto, ve a <strong>Inventario</strong> → edita el producto → modifica el campo <strong>Stock mínimo</strong>.</p>
+  </div>
+
+  <!-- 8. Reportes -->
+  <div class="section" id="reportes">
+    <div class="section-header">
+      <div class="section-num">8</div>
+      <h2>Reportes y exportar datos</h2>
+    </div>
+    <p>Ve al módulo <strong>Reportes</strong> para ver:</p>
+    <table>
+      <thead><tr><th>Reporte</th><th>Qué muestra</th></tr></thead>
+      <tbody>
+        <tr><td>Ventas</td><td>Total de ingresos, número de transacciones y ticket promedio por día.</td></tr>
+        <tr><td>Productos más vendidos</td><td>Ranking de productos por unidades vendidas e ingresos generados.</td></tr>
+        <tr><td>Ganancia bruta</td><td>Ingresos totales, ganancia y margen por categoría.</td></tr>
+      </tbody>
+    </table>
+    <h3>Exportar a Excel</h3>
+    <div class="steps">
+      <div class="step"><div class="step-n">1</div><div class="step-text">En el módulo Reportes, selecciona el rango de fechas (hoy, 7 días, 30 días).</div></div>
+      <div class="step"><div class="step-n">2</div><div class="step-text">Haz clic en <strong>Exportar CSV</strong>.</div></div>
+      <div class="step"><div class="step-n">3</div><div class="step-text">Se descargará un archivo que puedes abrir con Excel o Google Sheets.</div></div>
+    </div>
+  </div>
+
+  <!-- 9. Backup -->
+  <div class="section" id="backup">
+    <div class="section-header">
+      <div class="section-num">9</div>
+      <h2>Copias de seguridad</h2>
+    </div>
+    <p>El sistema hace una copia automática de la base de datos <strong>todos los días a las 2:00 AM</strong>. Las copias se guardan en la carpeta <kbd>backups\</kbd> dentro del sistema.</p>
+    <p>Se conservan las últimas <strong>30 copias</strong> (un mes de historial).</p>
+    <h3>Hacer un backup manual</h3>
+    <div class="steps">
+      <div class="step"><div class="step-n">1</div><div class="step-text">Abre la carpeta del sistema.</div></div>
+      <div class="step"><div class="step-n">2</div><div class="step-text">Haz doble clic en <kbd>backup.py</kbd> para ejecutarlo (requiere Python instalado).</div></div>
+      <div class="step"><div class="step-n">3</div><div class="step-text">La copia se guarda en la carpeta <kbd>backups\</kbd> con la fecha y hora en el nombre.</div></div>
+    </div>
+    <div class="warn"><span class="warn-icon">⚠</span> Se recomienda copiar la carpeta <kbd>backups\</kbd> a un USB o disco externo periódicamente, en caso de fallo del disco duro de la PC.</div>
+    <h3>Restaurar un backup</h3>
+    <div class="steps">
+      <div class="step"><div class="step-n">1</div><div class="step-text">Cierra el sistema y detén el servidor.</div></div>
+      <div class="step"><div class="step-n">2</div><div class="step-text">Ve a la carpeta <kbd>backend\</kbd> y elimina (o renombra) el archivo <kbd>inventario.db</kbd> actual.</div></div>
+      <div class="step"><div class="step-n">3</div><div class="step-text">Copia el archivo de backup que deseas restaurar desde <kbd>backups\</kbd> hacia <kbd>backend\</kbd> y renómbralo a <kbd>inventario.db</kbd>.</div></div>
+      <div class="step"><div class="step-n">4</div><div class="step-text">Reinicia el servidor y abre el sistema.</div></div>
+    </div>
+  </div>
+
+  <!-- 10. Problemas -->
+  <div class="section" id="problemas">
+    <div class="section-header">
+      <div class="section-num">10</div>
+      <h2>Solución de problemas comunes</h2>
+    </div>
+    <table>
+      <thead><tr><th>Problema</th><th>Solución</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>La app abre pero dice "Error de conexión"</td>
+          <td>El servidor no está corriendo. Abre la carpeta del sistema y ejecuta <kbd>iniciar_servidor.vbs</kbd>. Espera 5 segundos y vuelve a abrir la app.</td>
+        </tr>
+        <tr>
+          <td>El celular no puede conectarse</td>
+          <td>Verifica que el celular y la PC estén en la misma red WiFi. Confirma la IP de la PC con <kbd>ipconfig</kbd>. Prueba desactivar temporalmente el antivirus/firewall de Windows.</td>
+        </tr>
+        <tr>
+          <td>No puedo registrar ventas (botón Cobrar desactivado)</td>
+          <td>La caja está cerrada. Ve al módulo <strong>Caja</strong> y ábrela primero.</td>
+        </tr>
+        <tr>
+          <td>Olvidé la contraseña del admin</td>
+          <td>Contacta al técnico que instaló el sistema para que ejecute <kbd>seed.py</kbd> nuevamente y recree el usuario admin.</td>
+        </tr>
+        <tr>
+          <td>La app tarda en cargar al inicio</td>
+          <td>El servidor necesita ~5 segundos para iniciar después de encender la PC. Espera un momento y recarga.</td>
+        </tr>
+        <tr>
+          <td>Un producto aparece agotado pero hay stock físico</td>
+          <td>Ve a <strong>Inventario</strong>, edita el producto y corrige el stock manualmente usando el campo "Stock actual".</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <footer>
+    The Market v1.0 — Sistema de inventario y ventas para mini supermercados
+  </footer>
+</div>
+</body>
+</html>

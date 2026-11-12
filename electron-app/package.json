@@ -1,0 +1,57 @@
+{
+  "name": "the-market-desktop",
+  "version": "2.0.0",
+  "description": "Sistema de inventario y ventas para mini supermercados",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win --x64"
+  },
+  "devDependencies": {
+    "electron": "^31.7.7",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.themarket.desktop",
+    "productName": "The Market",
+    "copyright": "The Market",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "The Market"
+    },
+    "files": [
+      "main.js"
+    ],
+    "extraResources": [
+      {
+        "from": "../frontend",
+        "to": "frontend",
+        "filter": [
+          "**/*",
+          "!**/*.map"
+        ]
+      },
+      {
+        "from": "../admin-desktop/Icon.jsx",
+        "to": "admin-desktop/Icon.jsx"
+      },
+      {
+        "from": "../admin-desktop/components.jsx",
+        "to": "admin-desktop/components.jsx"
+      },
+      {
+        "from": "../colors_and_type.css",
+        "to": "colors_and_type.css"
+      }
+    ]
+  }
+}

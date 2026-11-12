@@ -1,0 +1,279 @@
+
+<h2 class="sr-only">Plan de implementación por fases del sistema de inventario y ventas para mini supermercados</h2>
+<style>
+.phase-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.phase-badge{font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.task-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:10px 14px;margin-bottom:8px}
+.task-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin:0 0 4px}
+.task-desc{font-size:12px;color:var(--color-text-secondary);margin:0 0 8px;line-height:1.5}
+.task-roles{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.role-pill{font-size:11px;padding:2px 8px;border-radius:20px;border:0.5px solid}
+.role-admin{background:var(--color-background-info);color:var(--color-text-info);border-color:var(--color-border-info)}
+.role-vendor{background:var(--color-background-success);color:var(--color-text-success);border-color:var(--color-border-success)}
+.prompt-btn{font-size:11px;padding:4px 10px;border-radius:var(--border-radius-md);cursor:pointer;background:transparent;border:0.5px solid var(--color-border-secondary);color:var(--color-text-secondary);width:100%;text-align:left}
+.prompt-btn:hover{background:var(--color-background-secondary)}
+.phase-block{margin-bottom:2rem}
+.phase-num{font-size:12px;font-weight:500;padding:4px 12px;border-radius:20px}
+.task-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
+.module-chip{font-size:11px;padding:2px 8px;border-radius:12px;background:var(--color-background-tertiary);color:var(--color-text-secondary);border:0.5px solid var(--color-border-tertiary);display:inline-block;margin:2px 2px 0 0}
+.section-sep{border:none;border-top:0.5px solid var(--color-border-tertiary);margin:1.5rem 0}
+.legend{display:flex;gap:16px;margin-bottom:1.5rem;flex-wrap:wrap}
+</style>
+
+<div style="padding:1rem 0 0">
+
+<div class="legend">
+  <span style="font-size:13px;color:var(--color-text-secondary)">Roles:</span>
+  <span class="role-pill role-admin"><i class="ti ti-shield" style="font-size:11px" aria-hidden="true"></i> Admin</span>
+  <span class="role-vendor"><span class="role-pill role-vendor"><i class="ti ti-user" style="font-size:11px" aria-hidden="true"></i> Vendedor</span></span>
+</div>
+
+<!-- FASE 1 -->
+<div class="phase-block">
+  <div class="phase-header">
+    <span class="phase-num" style="background:var(--color-background-secondary);color:var(--color-text-primary);border:0.5px solid var(--color-border-secondary)">Fase 1</span>
+    <span style="font-size:15px;font-weight:500;color:var(--color-text-primary)">Base del proyecto · Backend + Base de datos</span>
+    <span class="phase-badge" style="background:var(--color-background-secondary);color:var(--color-text-secondary)">~2 semanas</span>
+  </div>
+  <div class="task-grid">
+    <div class="task-card">
+      <p class="task-title"><i class="ti ti-folder" style="font-size:13px;margin-right:4px" aria-hidden="true"></i>1.1 · Estructura del proyecto</p>
+      <p class="task-desc">Crear carpetas, entorno virtual Python, instalar FastAPI, Uvicorn, SQLite. Configurar .gitignore y README.</p>
+      <button class="prompt-btn" onclick="sendPrompt('Crea la estructura de carpetas del proyecto con FastAPI y SQLite. Incluye entorno virtual, requirements.txt con FastAPI, uvicorn, sqlalchemy, pydantic. Muestra el árbol de directorios completo.')">Genera la estructura del proyecto ↗</button>
+    </div>
+    <div class="task-card">
+      <p class="task-title"><i class="ti ti-database" style="font-size:13px;margin-right:4px" aria-hidden="true"></i>1.2 · Modelos de base de datos</p>
+      <p class="task-desc">Tablas: usuarios, roles, categorias, proveedores, productos, ventas, detalle_venta, movimientos_stock, caja.</p>
+      <button class="prompt-btn" onclick="sendPrompt('Crea los modelos SQLAlchemy para el sistema de inventario. Tablas: usuarios (id, nombre, email, password_hash, rol: admin/vendedor, activo), roles, categorias, proveedores, productos (id, nombre, codigo_barras, precio_compra, precio_venta, stock, stock_minimo, categoria_id, proveedor_id), ventas (id, fecha, usuario_id, total, estado), detalle_venta, movimientos_stock, caja (apertura/cierre). Incluye relaciones y timestamps.')">Crea los modelos SQLAlchemy ↗</button>
+    </div>
+    <div class="task-card">
+      <p class="task-title"><i class="ti ti-lock" style="font-size:13px;margin-right:4px" aria-hidden="true"></i>1.3 · Autenticación y roles</p>
+      <p class="task-desc">Login con JWT. Middleware de roles: Admin (acceso total), Vendedor (solo POS e inventario lectura).</p>
+      <div class="task-roles"><span class="role-pill role-admin">Admin</span><span class="role-pill role-vendor">Vendedor</span></div>
+      <button class="prompt-btn" onclick="sendPrompt('Implementa autenticación con JWT en FastAPI. Endpoint POST /auth/login que retorna access_token. Middleware que valida el token y extrae el rol (admin, vendedor). Decorador get_current_user y verify_role(roles=[\"admin\"]) para proteger rutas. Usa python-jose y passlib.')">Implementa auth JWT con roles ↗</button>
+    </div>
+    <div class="task-card">
+      <p class="task-title"><i class="ti ti-api" style="font-size:13px;margin-right:4px" aria-hidden="true"></i>1.4 · Endpoints base CRUD</p>
+      <p class="task-desc">CRUD completo: /productos, /categorias, /proveedores, /usuarios. Con paginación, filtros y búsqueda por código de barras.</p>
+      <div class="task-roles"><span class="role-pill role-admin">Admin</span></div>
+      <button class="prompt-btn" onclick="sendPrompt('Crea los routers FastAPI con CRUD completo para: productos (GET lista con paginación y filtro por categoría/nombre/código_barras, GET por id, POST, PUT, DELETE), categorias, proveedores, usuarios. Solo admin puede crear/editar/borrar. Incluye schemas Pydantic para request y response.')">Crea los routers CRUD ↗</button>
+    </div>
+  </div>
+</div>
+
+<hr class="section-sep">
+
+<!-- FASE 2 -->
+<div class="phase-block">
+  <div class="phase-header">
+    <span class="phase-num" style="background:var(--color-background-secondary);color:var(--color-text-primary);border:0.5px solid var(--color-border-secondary)">Fase 2</span>
+    <span style="font-size:15px;font-weight:500;color:var(--color-text-primary)">Módulo de inventario</span>
+    <span class="phase-badge" style="background:var(--color-background-secondary);color:var(--color-text-secondary)">~1.5 semanas</span>
+  </div>
+  <div class="task-grid">
+    <div class="task-card">
+      <p class="task-title"><i class="ti ti-package" style="font-size:13px;margin-right:4px" aria-hidden="true"></i>2.1 · Gestión de stock</p>
+      <p class="task-desc">Entradas y salidas de inventario. Registro de movimientos con motivo, cantidad, usuario que realizó el ajuste.</p>
+      <div class="task-roles"><span class="role-pill role-admin">Admin</span></div>
+      <button class="prompt-btn" onclick="sendPrompt('Crea el módulo de movimientos de stock en FastAPI. Endpoint POST /inventario/entrada (aumenta stock, registra proveedor, costo, cantidad, usuario). POST /inventario/ajuste (corrección manual, requiere motivo, solo admin). GET /inventario/movimientos con filtros por producto y fecha. Al registrar venta, descuenta stock automáticamente.')">Crea el módulo de stock ↗</button>
+    </div>
+    <div class="task-card">
+      <p class="task-title"><i class="ti ti-bell" style="font-size:13px;margin-right:4px" aria-hidden="true"></i>2.2 · Alertas de stock mínimo</p>
+      <p class="task-desc">Endpoint que retorna productos bajo el stock mínimo definido. Se consulta al iniciar sesión y en el dashboard.</p>
+      <div class="task-roles"><span class="role-pill role-admin">Admin</span><span class="role-pill role-vendor">Vendedor</span></div>
+      <button class="prompt-btn" onclick="sendPrompt('Crea endpoint GET /inventario/alertas que retorne lista de productos donde stock actual <= stock_minimo. Incluir nombre, código barras, stock actual, stock mínimo y proveedor sugerido. También agregar campo fecha_vencimiento a productos y endpoint GET /inventario/por-vencer que retorne productos que vencen en los próximos 30 días.')">Crea el sistema de alertas ↗</button>
+    </div>
+    <div class="task-card">
+      <p class="task-title"><i class="ti ti-truck" style="font-size:13px;margin-right:4px" aria-hidden="true"></i>2.3 · Módulo de compras</p>
+      <p class="task-desc">Órdenes de compra a proveedores. Registro de facturas, actualización automática de stock al recibir mercadería.</p>
+      <div class="task-roles"><span class="role-pill role-admin">Admin</span></div>
+      <button class="prompt-btn" onclick="sendPrompt('Crea el módulo de compras: tabla ordenes_compra (id, proveedor_id, fecha, estado: pendiente/recibida, total) y detalle_compra (producto_id, cantidad, precio_unitario). Endpoint POST /compras para crear orden, PUT /compras/{id}/recibir que actualiza stock de cada producto y registra movimiento. GET /compras con filtros.')">Crea el módulo de compras ↗</button>
+    </div>
+    <div class="task-card">
+      <p class="task-title"><i class="ti ti-barcode" style="font-size:13px;margin-right:4px" aria-hidden="true"></i>2.4 · Búsqueda por código de barras</p>
+      <p class="task-desc">Endpoint optimizado GET /productos/barcode/{codigo} que retorna producto completo en menos de 100ms.</p>
+      <div class="task-roles"><span class="role-pill role-admin">Admin</span><span class="role-pill role-vendor">Vendedor</span></div>
+      <button class="prompt-btn" onclick="sendPrompt('Crea endpoint GET /productos/barcode/{codigo} optimizado con índice en la columna codigo_barras de SQLite. Que retorne: id, nombre, precio_venta, stock, categoria, imagen_url. Si no existe retornar 404 con mensaje claro. Agregar índice en el modelo SQLAlchemy para esa columna.')">Crea búsqueda por barcode ↗</button>
+    </div>
+  </div>
+</div>
+
+<hr class="section-sep">
+
+<!-- FASE 3 -->
+<div class="phase-block">
+  <div class="phase-header">
+    <span class="phase-num" style="background:var(--color-background-secondary);color:var(--color-text-primary);border:0.5px solid var(--color-border-secondary)">Fase 3</span>
+    <span style="font-size:15px;font-weight:500;color:var(--color-text-primary)">Módulo de ventas y caja (POS)</span>
+    <span class="phase-badge" style="background:var(--color-background-secondary);color:var(--color-text-secondary)">~2 semanas</span>
+  </div>
+  <div class="task-grid">
+    <div class="task-card">
+      <p class="task-title"><i class="ti ti-shopping-cart" style="font-size:13px;margin-right:4px" aria-hidden="true"></i>3.1 · Registro de ventas</p>
+      <p class="task-desc">Crear venta con múltiples productos, calcular total, descontar stock, registrar método de pago (efectivo/tarjeta).</p>
+      <div class="task-roles"><span class="role-pill role-vendor">Vendedor</span><span class="role-pill role-admin">Admin</span></div>
+      <button class="prompt-btn" onclick="sendPrompt('Crea el endpoint POST /ventas que reciba: usuario_id, metodo_pago (efectivo/tarjeta/mixto), monto_recibido, lista de items [{producto_id, cantidad, precio_unitario}]. Debe: validar stock disponible por cada producto, calcular total y cambio, crear la venta y detalle, descontar stock, registrar movimiento. Todo en una transacción atómica. Retornar venta completa con número de recibo.')">Crea el endpoint de ventas ↗</button>
+    </div>
+    <div class="task-card">
+      <p class="task-title"><i class="ti ti-receipt" style="font-size:13px;margin-right:4px" aria-hidden="true"></i>3.2 · Recibos y comprobantes</p>
+      <p class="task-desc">Generar recibo en formato JSON listo para imprimir en impresora térmica (58mm/80mm) o mostrar en pantalla.</p>
+      <div class="task-roles"><span class="role-pill role-vendor">Vendedor</span></div>
+      <button class="prompt-btn" onclick="sendPrompt('Crea endpoint GET /ventas/{id}/recibo que retorne JSON estructurado para impresora térmica: nombre negocio, fecha, número de venta, lista de productos (nombre, cantidad, precio unitario, subtotal), total, método de pago, monto recibido, cambio, nombre del vendedor. También genera el texto formateado a 32 caracteres de ancho para impresión directa con python-escpos.')">Crea generación de recibos ↗</button>
+    </div>
+    <div class="task-card">
+      <p class="task-title"><i class="ti ti-cash" style="font-size:13px;margin-right:4px" aria-hidden="true"></i>3.3 · Apertura y cierre de caja</p>
+      <p class="task-desc">Apertura de caja con monto inicial. Cierre con conteo de efectivo, diferencias, resumen del día por método de pago.</p>
+      <div class="task-roles"><span class="role-pill role-admin">Admin</span><span class="role-pill role-vendor">Vendedor</span></div>
+      <button class="prompt-btn" onclick="sendPrompt('Crea el módulo de caja: tabla caja_sesiones (id, usuario_apertura, monto_inicial, fecha_apertura, usuario_cierre, monto_contado, diferencia, fecha_cierre, estado). POST /caja/abrir, POST /caja/cerrar recibe monto contado en efectivo y genera resumen: total ventas, ventas en efectivo, ventas tarjeta, monto esperado efectivo, diferencia. Solo puede haber una caja abierta a la vez.')">Crea el módulo de caja ↗</button>
+    </div>
+    <div class="task-card">
+      <p class="task-title"><i class="ti ti-rotate-clockwise" style="font-size:13px;margin-right:4px" aria-hidden="true"></i>3.4 · Devoluciones</p>
+      <p class="task-desc">Anular ventas o devolver productos individuales. Reponer stock automáticamente. Solo admin puede anular.</p>
+      <div class="task-roles"><span class="role-pill role-admin">Admin</span></div>
+      <button class="prompt-btn" onclick="sendPrompt('Crea endpoint POST /ventas/{id}/anular (anula venta completa, repone todo el stock, cambia estado a anulada, requiere motivo, solo admin) y POST /ventas/{id}/devolucion con lista de items a devolver parcialmente. Registrar movimiento de stock con tipo=devolucion. No permitir anular ventas de más de 24 horas sin confirmación extra.')">Crea el módulo de devoluciones ↗</button>
+    </div>
+  </div>
+</div>
+
+<hr class="section-sep">
+
+<!-- FASE 4 -->
+<div class="phase-block">
+  <div class="phase-header">
+    <span class="phase-num" style="background:var(--color-background-secondary);color:var(--color-text-primary);border:0.5px solid var(--color-border-secondary)">Fase 4</span>
+    <span style="font-size:15px;font-weight:500;color:var(--color-text-primary)">Reportes y dashboard (Admin)</span>
+    <span class="phase-badge" style="background:var(--color-background-secondary);color:var(--color-text-secondary)">~1.5 semanas</span>
+  </div>
+  <div class="task-grid">
+    <div class="task-card">
+      <p class="task-title"><i class="ti ti-chart-bar" style="font-size:13px;margin-right:4px" aria-hidden="true"></i>4.1 · Reportes de ventas</p>
+      <p class="task-desc">Ventas por día/semana/mes/rango, por vendedor, por método de pago. Exportar a CSV.</p>
+      <div class="task-roles"><span class="role-pill role-admin">Admin</span></div>
+      <button class="prompt-btn" onclick="sendPrompt('Crea endpoints de reportes en FastAPI: GET /reportes/ventas?desde=&hasta=&vendedor_id= que retorne total ventas, cantidad transacciones, ticket promedio, desglose por día. GET /reportes/ventas/por-vendedor en el rango. GET /reportes/ventas/exportar que retorne CSV con todas las ventas del período incluyendo detalle de productos.')">Crea los reportes de ventas ↗</button>
+    </div>
+    <div class="task-card">
+      <p class="task-title"><i class="ti ti-trending-up" style="font-size:13px;margin-right:4px" aria-hidden="true"></i>4.2 · Reportes de productos</p>
+      <p class="task-desc">Top productos más vendidos, productos sin movimiento, ganancia bruta por producto y categoría.</p>
+      <div class="task-roles"><span class="role-pill role-admin">Admin</span></div>
+      <button class="prompt-btn" onclick="sendPrompt('Crea: GET /reportes/productos/top-ventas?limite=20&desde=&hasta= con nombre, cantidad vendida, ingresos, ganancia bruta (precio_venta - precio_compra)*cantidad. GET /reportes/productos/sin-movimiento?dias=30 productos sin ventas en X días. GET /reportes/ganancia-bruta?desde=&hasta= por categoría y total. Incluye cálculo de margen porcentual.')">Crea los reportes de productos ↗</button>
+    </div>
+    <div class="task-card">
+      <p class="task-title"><i class="ti ti-home" style="font-size:13px;margin-right:4px" aria-hidden="true"></i>4.3 · Dashboard resumen</p>
+      <p class="task-desc">Endpoint único GET /dashboard que retorna todo lo necesario para la pantalla principal del admin en una sola llamada.</p>
+      <div class="task-roles"><span class="role-pill role-admin">Admin</span></div>
+      <button class="prompt-btn" onclick="sendPrompt('Crea GET /dashboard que retorne en una sola consulta: ventas_hoy (total y cantidad), ventas_semana, productos_bajo_stock (lista top 5), ultimas_5_ventas, caja_actual (estado: abierta/cerrada, monto_inicial si abierta), productos_por_vencer_7_dias (cantidad). Optimizar con una sola transacción de BD.')">Crea el endpoint de dashboard ↗</button>
+    </div>
+    <div class="task-card">
+      <p class="task-title"><i class="ti ti-users" style="font-size:13px;margin-right:4px" aria-hidden="true"></i>4.4 · Gestión de usuarios</p>
+      <p class="task-desc">Admin crea/edita/desactiva vendedores. Historial de acciones por usuario. Cambio de contraseña.</p>
+      <div class="task-roles"><span class="role-pill role-admin">Admin</span></div>
+      <button class="prompt-btn" onclick="sendPrompt('Crea endpoints de gestión de usuarios: POST /usuarios (crear vendedor, solo admin), PUT /usuarios/{id} (editar nombre, email, rol, activo), DELETE /usuarios/{id} desactiva (no borra), POST /usuarios/{id}/reset-password genera contraseña temporal. GET /usuarios/{id}/actividad retorna últimas 50 acciones del usuario (ventas, ajustes, login). Todos requieren rol admin.')">Crea gestión de usuarios ↗</button>
+    </div>
+  </div>
+</div>
+
+<hr class="section-sep">
+
+<!-- FASE 5 -->
+<div class="phase-block">
+  <div class="phase-header">
+    <span class="phase-num" style="background:var(--color-background-secondary);color:var(--color-text-primary);border:0.5px solid var(--color-border-secondary)">Fase 5</span>
+    <span style="font-size:15px;font-weight:500;color:var(--color-text-primary)">App desktop (Windows) · Electron + React</span>
+    <span class="phase-badge" style="background:var(--color-background-secondary);color:var(--color-text-secondary)">~3 semanas</span>
+  </div>
+  <div class="task-grid">
+    <div class="task-card">
+      <p class="task-title"><i class="ti ti-layout" style="font-size:13px;margin-right:4px" aria-hidden="true"></i>5.1 · Proyecto Electron base</p>
+      <p class="task-desc">Setup con Electron + React + Vite. Configuración de la URL del servidor, pantalla de login, sidebar de navegación.</p>
+      <button class="prompt-btn" onclick="sendPrompt('Crea el proyecto base de Electron con React y Vite para el sistema de inventario. Incluye: package.json con electron, electron-builder, react, vite. Estructura de carpetas src/pages src/components src/api. Pantalla de login que llama a POST /auth/login, guarda el JWT en localStorage, y redirige según rol (admin ve todo, vendedor solo ve POS e inventario). Sidebar de navegación con íconos.')">Crea el proyecto Electron base ↗</button>
+    </div>
+    <div class="task-card">
+      <p class="task-title"><i class="ti ti-layout-dashboard" style="font-size:13px;margin-right:4px" aria-hidden="true"></i>5.2 · Pantallas admin</p>
+      <p class="task-desc">Dashboard, inventario, compras, proveedores, reportes, gestión de usuarios. Tablas con filtros y paginación.</p>
+      <div class="task-roles"><span class="role-pill role-admin">Admin</span></div>
+      <button class="prompt-btn" onclick="sendPrompt('Crea los componentes React para el admin: DashboardPage (muestra métricas del GET /dashboard), InventarioPage (tabla de productos con búsqueda, filtro por categoría, botón agregar/editar, badge rojo en stock bajo), ProductoModal (formulario crear/editar producto con todos los campos), ProveedoresPage y UsuariosPage. Usar fetch con el JWT en el header Authorization.')">Crea las pantallas del admin ↗</button>
+    </div>
+    <div class="task-card">
+      <p class="task-title"><i class="ti ti-cash-register" style="font-size:13px;margin-right:4px" aria-hidden="true"></i>5.3 · POS pantalla vendedor</p>
+      <p class="task-desc">Interfaz de punto de venta: buscar producto, agregar al carrito, cobrar. Diseño optimizado para pantalla táctil.</p>
+      <div class="task-roles"><span class="role-pill role-vendor">Vendedor</span></div>
+      <button class="prompt-btn" onclick="sendPrompt('Crea la pantalla POS en React: panel izquierdo con input de búsqueda (por nombre o código barras) que llama a /productos?q=, grid de resultados con foto, nombre y precio. Panel derecho con el carrito (lista de items, cantidad editable, subtotal, botón eliminar), total grande, selector método de pago, campo monto recibido y cálculo de cambio automático. Botón COBRAR que llama a POST /ventas y muestra modal de confirmación con número de recibo.')">Crea la pantalla POS ↗</button>
+    </div>
+    <div class="task-card">
+      <p class="task-title"><i class="ti ti-package" style="font-size:13px;margin-right:4px" aria-hidden="true"></i>5.4 · Empaquetado como .exe</p>
+      <p class="task-desc">Configurar electron-builder para generar instalador .exe para Windows. Con ícono del negocio personalizable.</p>
+      <button class="prompt-btn" onclick="sendPrompt('Configura electron-builder en el package.json para generar instalador .exe para Windows (NSIS installer). Incluye: nombre de la app, ícono .ico, directorio de salida dist/. El .exe debe instalar la app en Program Files y crear acceso directo en escritorio. También configura la variable de entorno VITE_API_URL para que el usuario pueda cambiar la IP del servidor desde la app en un archivo de configuración local.')">Configura el instalador .exe ↗</button>
+    </div>
+  </div>
+</div>
+
+<hr class="section-sep">
+
+<!-- FASE 6 -->
+<div class="phase-block">
+  <div class="phase-header">
+    <span class="phase-num" style="background:var(--color-background-secondary);color:var(--color-text-primary);border:0.5px solid var(--color-border-secondary)">Fase 6</span>
+    <span style="font-size:15px;font-weight:500;color:var(--color-text-primary)">App móvil · React Native + Expo</span>
+    <span class="phase-badge" style="background:var(--color-background-secondary);color:var(--color-text-secondary)">~2.5 semanas</span>
+  </div>
+  <div class="task-grid">
+    <div class="task-card">
+      <p class="task-title"><i class="ti ti-device-mobile" style="font-size:13px;margin-right:4px" aria-hidden="true"></i>6.1 · Proyecto Expo base</p>
+      <p class="task-desc">Setup con Expo + React Navigation. Login, configuración de IP del servidor, almacenamiento del token.</p>
+      <button class="prompt-btn" onclick="sendPrompt('Crea el proyecto Expo con React Navigation para la app móvil del sistema de ventas. Incluye: expo-router, @react-navigation/native, axios configurado con baseURL editable (el usuario ingresa la IP del servidor en la primera pantalla), AsyncStorage para guardar JWT y URL. Pantalla de login, y navegación por tabs: POS, Inventario, Alertas (solo admin ve Alertas y más opciones).')">Crea el proyecto Expo base ↗</button>
+    </div>
+    <div class="task-card">
+      <p class="task-title"><i class="ti ti-barcode" style="font-size:13px;margin-right:4px" aria-hidden="true"></i>6.2 · Escáner de código de barras</p>
+      <p class="task-desc">Leer código de barras con la cámara usando Vision Camera + MLKit. Buscar producto y agregarlo al carrito automáticamente.</p>
+      <div class="task-roles"><span class="role-pill role-vendor">Vendedor</span><span class="role-pill role-admin">Admin</span></div>
+      <button class="prompt-btn" onclick="sendPrompt('Implementa el escáner de código de barras en React Native usando react-native-vision-camera con @react-native-ml-kit/barcode-scanning. Componente BarcodeScanner que: activa la cámara trasera, detecta código en tiempo real, al leer llama a GET /productos/barcode/{codigo}, si existe agrega al carrito y vibra el teléfono, si no existe muestra alerta. Incluye botón para ingresar código manual como fallback.')">Implementa el escáner ↗</button>
+    </div>
+    <div class="task-card">
+      <p class="task-title"><i class="ti ti-shopping-cart" style="font-size:13px;margin-right:4px" aria-hidden="true"></i>6.3 · POS móvil</p>
+      <p class="task-desc">Pantalla de venta rápida: carrito, cobrar, mostrar resumen de recibo. Optimizada para uso con una mano.</p>
+      <div class="task-roles"><span class="role-pill role-vendor">Vendedor</span></div>
+      <button class="prompt-btn" onclick="sendPrompt('Crea la pantalla POS móvil en React Native: FlatList con los items del carrito (nombre, cantidad con +/-, precio), total en grande abajo, botón COBRAR que abre un BottomSheet con método de pago, campo monto recibido y cambio calculado. Al confirmar llama a POST /ventas. Pantalla de éxito con número de recibo y opción de imprimir por Bluetooth (preparar para impresora térmica Bluetooth).')">Crea el POS móvil ↗</button>
+    </div>
+    <div class="task-card">
+      <p class="task-title"><i class="ti ti-bell" style="font-size:13px;margin-right:4px" aria-hidden="true"></i>6.4 · Alertas y consultas rápidas</p>
+      <p class="task-desc">Pantalla de alertas: stock bajo y por vencer. Consulta rápida de stock de un producto escaneando.</p>
+      <div class="task-roles"><span class="role-pill role-admin">Admin</span></div>
+      <button class="prompt-btn" onclick="sendPrompt('Crea en React Native: AlertasScreen que muestra dos secciones - productos bajo stock mínimo (con nombre, stock actual vs mínimo en rojo) y productos por vencer en 7 días. Con pull-to-refresh. También ConsultaStockScreen donde el admin puede escanear cualquier producto y ver: stock actual, precio compra/venta, margen, historial de los últimos 10 movimientos. Genera APK con expo build:android.')">Crea alertas y consultas ↗</button>
+    </div>
+  </div>
+</div>
+
+<hr class="section-sep">
+
+<!-- FASE 7 -->
+<div class="phase-block">
+  <div class="phase-header">
+    <span class="phase-num" style="background:var(--color-background-secondary);color:var(--color-text-primary);border:0.5px solid var(--color-border-secondary)">Fase 7</span>
+    <span style="font-size:15px;font-weight:500;color:var(--color-text-primary)">Integración final · pruebas y despliegue</span>
+    <span class="phase-badge" style="background:var(--color-background-secondary);color:var(--color-text-secondary)">~1 semana</span>
+  </div>
+  <div class="task-grid">
+    <div class="task-card">
+      <p class="task-title"><i class="ti ti-settings" style="font-size:13px;margin-right:4px" aria-hidden="true"></i>7.1 · Script de instalación</p>
+      <p class="task-desc">Script que instala Python, dependencias y corre el servidor como servicio de Windows al iniciar la PC.</p>
+      <button class="prompt-btn" onclick="sendPrompt('Crea un script install.bat para Windows que: instale Python si no está instalado, cree el entorno virtual, instale requirements.txt, cree la base de datos con datos iniciales (usuario admin por defecto), y registre el servidor FastAPI como servicio de Windows usando NSSM para que inicie automáticamente con la PC. Incluye instrucciones claras en pantalla.')">Crea el script de instalación ↗</button>
+    </div>
+    <div class="task-card">
+      <p class="task-title"><i class="ti ti-database-export" style="font-size:13px;margin-right:4px" aria-hidden="true"></i>7.2 · Backup automático</p>
+      <p class="task-desc">Script que hace copia del archivo SQLite diariamente a una carpeta local o USB. Con límite de copias guardadas.</p>
+      <button class="prompt-btn" onclick="sendPrompt('Crea un script Python backup.py que copie el archivo inventario.db a una carpeta backups/ con nombre inventario_YYYY-MM-DD.db. Mantener solo los últimos 30 backups (borrar los más viejos). Programarlo como tarea en el Planificador de Windows para correr cada día a las 11pm. Incluye endpoint POST /admin/backup en FastAPI que ejecuta el backup manualmente desde la app.')">Crea el sistema de backup ↗</button>
+    </div>
+    <div class="task-card">
+      <p class="task-title"><i class="ti ti-test-pipe" style="font-size:13px;margin-right:4px" aria-hidden="true"></i>7.3 · Pruebas del flujo completo</p>
+      <p class="task-desc">Checklist de pruebas: login, venta completa, cierre de caja, alertas, backup, acceso por roles.</p>
+      <button class="prompt-btn" onclick="sendPrompt('Genera un checklist detallado de pruebas para el sistema de inventario antes de entregarlo al negocio. Incluye: pruebas de autenticación (login admin, login vendedor, acceso denegado a rutas protegidas), flujo completo de venta (buscar producto, agregar, cobrar, verificar stock descontado), cierre de caja, alertas de stock, backup, escaneo con móvil, y casos borde (stock en 0, código inexistente, venta sin caja abierta).')">Genera el checklist de pruebas ↗</button>
+    </div>
+    <div class="task-card">
+      <p class="task-title"><i class="ti ti-book" style="font-size:13px;margin-right:4px" aria-hidden="true"></i>7.4 · Manual de usuario</p>
+      <p class="task-desc">Manual rápido para el dueño del negocio y para los vendedores. Operaciones más comunes paso a paso.</p>
+      <button class="prompt-btn" onclick="sendPrompt('Genera un manual de usuario en español para el sistema de inventario. Dos secciones: (1) Manual del Administrador: configurar productos, ver reportes, gestionar usuarios, cierre de caja, backup. (2) Manual del Vendedor: cómo realizar una venta desde la app desktop y desde el móvil con escáner, cómo hacer una devolución, qué hacer si el código no se encuentra. Formato simple con pasos numerados, sin tecnicismos.')">Genera el manual de usuario ↗</button>
+    </div>
+  </div>
+</div>
+
+</div>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Market — Admin</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; padding: 0; }
+  body { background: var(--ink-05); }
+  #root { min-height: 100vh; }
+  *, *::before, *::after { box-sizing: border-box; }
+  button:focus-visible, input:focus-visible, select:focus-visible {
+    outline: 2px solid var(--focus-ring); outline-offset: 1px;
+  }
+  @keyframes fade    { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes spin    { to { transform: rotate(360deg); } }
+</style>
+
+<script src="lib/react.development.js"></script>
+<script src="lib/react-dom.development.js"></script>
+<script src="lib/babel.min.js"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<!-- Tema: se aplica antes de pintar para evitar el destello del tema claro -->
+<script src="tema.js"></script>
+
+<!-- API client -->
+<script src="api.js"></script>
+
+<!-- UI kit: Icon → primitives → extras → Shell → screens → app -->
+<script type="text/babel" data-presets="react" src="../admin-desktop/Icon.jsx"></script>
+<script type="text/babel" data-presets="react" src="../admin-desktop/components.jsx"></script>
+<script type="text/babel" data-presets="react" src="components_extra.jsx"></script>
+<script type="text/babel" data-presets="react" src="Shell.jsx"></script>
+<script type="text/babel" data-presets="react" src="screens/Login.jsx"></script>
+<script type="text/babel" data-presets="react" src="screens/Dashboard.jsx"></script>
+<script type="text/babel" data-presets="react" src="screens/Inventario.jsx"></script>
+<script type="text/babel" data-presets="react" src="screens/Clientes.jsx"></script>
+<script type="text/babel" data-presets="react" src="screens/Compras.jsx"></script>
+<script type="text/babel" data-presets="react" src="screens/Proveedores.jsx"></script>
+<script type="text/babel" data-presets="react" src="screens/Reportes.jsx"></script>
+<script type="text/babel" data-presets="react" src="screens/Usuarios.jsx"></script>
+<script type="text/babel" data-presets="react" src="screens/Caja.jsx"></script>
+<script type="text/babel" data-presets="react" src="screens/Vendedor.jsx"></script>
+<script type="text/babel" data-presets="react" src="screens/AppMovil.jsx"></script>
+<script type="text/babel" data-presets="react" src="app.jsx"></script>
+</body>
+</html>

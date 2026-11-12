@@ -1,0 +1,53 @@
+{
+  "expo": {
+    "name": "The Market",
+    "slug": "the-market-pos",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.themarket.pos",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Se usa la cámara para escanear códigos de barras de productos."
+      }
+    },
+    "android": {
+      "package": "com.themarket.pos",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.ACCESS_NETWORK_STATE",
+        "android.permission.INTERNET"
+      ],
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-sqlite"
+    ],
+    "updates": {
+      "url": "https://u.expo.dev/b8f400e6-a5df-4947-b75a-b0b3c38ac017",
+      "enabled": true,
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 0
+    },
+    "scheme": "themarket",
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b8f400e6-a5df-4947-b75a-b0b3c38ac017"
+      }
+    },
+    "owner": "ary_21"
+  }
+}

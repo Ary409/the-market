@@ -1,0 +1,37 @@
+# Dependencias
+node_modules/
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+# Datos y secretos locales (nunca al repositorio)
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+.secret_key
+.env
+backups/
+
+# Artefactos de compilación
+dist/
+build/
+.expo/
+web-build/
+*.apk
+*.aab
+*.exe
+
+# Firmas
+*.jks
+*.keystore
+*.p8
+*.p12
+*.key
+
+# Sistema y editor
+*.log
+.DS_Store
+Thumbs.db
+.claude/
